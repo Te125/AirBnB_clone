@@ -21,6 +21,8 @@ class BaseModel:
             self.created_at = datetime.today()
             """ assign with curent datetime """
             self.updated_at = self.created_at
+        if kwargs:
+            storage.new(self)
 
     def __str__(self):
         """ String instance that should be printed """
@@ -34,6 +36,7 @@ class BaseModel:
     def save(self):
         """ update public instance with current datetime """
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """ returns a dictionary containing all keys/values of dict """

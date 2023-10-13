@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-
-"""
-this is a module containg the FileStorage class
-"""
+""" This is a module containg the FileStorage class """
 
 import os
 import json
@@ -17,68 +14,59 @@ from models.review import Review
 
 
 class FileStorage():
-    """
-    FileStorage which will serve as the class that handles the persistence
-    of objects into json files
-    """
-
+    """ This class serializes instances to a json file and deserializes
+    json file to instances """
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
         """  returns the dictionary __objects """
-
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """ sets in __objects the obj with key <obj class name>.id """
-
         key = str(type(obj).__name__) + "." + obj.id
-        FileStorage.__objects[key] = obj
+        self.__objects[key] = obj
 
     def remove(self, key):
         """ removes obj from __objects using the key <obj class name>.id """
-
-        FileStorage.__objects.pop(key)
+        self.__objects.pop(key)
 
     def save(self):
         """ serializes __objects to the JSON file (path: __file_path) """
-
-        with open(FileStorage.__file_path, "w") as file:
+        with open(self.__file_path, "w") as file:
             objects_dict = {}
-            for key, value in FileStorage.__objects.items():
-                objects_dict[key] = FileStorage.__objects[key].to_dict()
+            for key, value in self.__objects.items():
+                objects_dict[key] = self.__objects[key].to_dict()
             json.dump(objects_dict, file)
 
     def reload(self):
         """ deserializes the JSON file to __objects """
-
-        if not os.path.exists(FileStorage.__file_path):
+        if not os.path.exists(self.__file_path):
             return
-
-        with open(FileStorage.__file_path, "r") as file:
+        with open(self.__file_path, "r") as file:
             content = file.read()
             if content is None:
                 return
             objects_dict = json.loads(content)
-            FileStorage.__objects = {}
+            self.__objects = {}
             for key, value in objects_dict.items():
                 if "User" in key:
-                    FileStorage.__objects[key] = User(**objects_dict[key])
+                    self.__objects[key] = User(**objects_dict[key])
                     continue
                 elif "State" in key:
-                    FileStorage.__objects[key] = State(**objects_dict[key])
+                    self.__objects[key] = State(**objects_dict[key])
                     continue
                 elif "City" in key:
-                    FileStorage.__objects[key] = City(**objects_dict[key])
+                    self.__objects[key] = City(**objects_dict[key])
                     continue
                 elif "Place" in key:
-                    FileStorage.__objects[key] = Place(**objects_dict[key])
+                    self.__objects[key] = Place(**objects_dict[key])
                     continue
                 elif "Amenity" in key:
-                    FileStorage.__objects[key] = Amenity(**objects_dict[key])
+                    self.__objects[key] = Amenity(**objects_dict[key])
                     continue
                 elif "Review" in key:
-                    FileStorage.__objects[key] = Review(**objects_dict[key])
+                    self.__objects[key] = Review(**objects_dict[key])
                     continue
-                FileStorage.__objects[key] = BaseModel(**objects_dict[key])
+                self.__objects[key] = BaseModel(**objects_dict[key])

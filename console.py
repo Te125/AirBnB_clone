@@ -1,12 +1,6 @@
 #!/usr/bin/python3
-
-
-"""
-This module contains the the HBNBCommand class
-which implements the cmd.Cmd class
-"""
-
-
+""" This module contains the the HBNBCommand class
+which implements the cmd.Cmd class """
 import cmd
 import json
 from models.base_model import BaseModel
@@ -26,7 +20,6 @@ class_names = [
     "Review"
 ]
 
-
 def update_instance(instance, attr, attr_value):
     """ add or update attribute of instance """
 
@@ -40,7 +33,6 @@ def update_instance(instance, attr, attr_value):
         value_type = type(getattr(instance, attr))
         setattr(instance, attr,
                 value_type(attr_value.replace('"', "")))
-
 
 def update_instance_with_dict(command):
     """ add or update multiple attributes with dict """
@@ -77,7 +69,6 @@ def update_instance_with_dict(command):
         else:
             print("** no instance found **")
 
-
 def get_objects(arguments):
     """ get the objects in storage """
 
@@ -90,7 +81,6 @@ def get_objects(arguments):
         if arguments[0] == key[:len(arguments[0])]:
             objects_list.append(str(value))
     return objects_list
-
 
 def get_command(command):
     """ reconstruct the command """
@@ -161,7 +151,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, command):
         """ all command's implementation """
-
         arguments = command.split(" ")
 
         if arguments[0] != "" and arguments[0] not in class_names:
