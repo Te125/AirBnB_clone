@@ -22,7 +22,6 @@ class_names = [
 
 def update_instance(instance, attr, attr_value):
     """ add or update attribute of instance """
-
     value = getattr(instance, attr, None)
     if value is None:
         setattr(
@@ -36,7 +35,6 @@ def update_instance(instance, attr, attr_value):
 
 def update_instance_with_dict(command):
     """ add or update multiple attributes with dict """
-
     command_list = command[
         command.index("{") + 1:command.index("}")
     ].replace(":", "").split(" ")
@@ -71,7 +69,6 @@ def update_instance_with_dict(command):
 
 def get_objects(arguments):
     """ get the objects in storage """
-
     objects = models.storage.all()
     objects_list = []
     for key, value in objects.items():
@@ -84,7 +81,6 @@ def get_objects(arguments):
 
 def get_command(command):
     """ reconstruct the command """
-
     if command.find("(") + 1 == command.find(")"):
         return "{}".format(command[:command.find(".")])
 
@@ -97,12 +93,10 @@ def get_command(command):
 
 class HBNBCommand(cmd.Cmd):
     """ This is a commandline interpreter for the AirBnB clone """
-
     prompt = "(hbnb) "
 
     def do_update(self, command):
         """ update command's implementation """
-
         arguments = command.split(" ")
 
         if arguments[0] == "":
@@ -128,7 +122,6 @@ class HBNBCommand(cmd.Cmd):
 
     def onecmd(self, command):
         """ handle commands such as User.all(), User.show(), etc """
-
         c = command.split(".")
         if len(c) > 1:
             func = command[command.index(".") + 1:command.index("(")]
@@ -162,7 +155,6 @@ class HBNBCommand(cmd.Cmd):
         """ destroy command's implementation """
 
         arguments = command.split(" ")
-
         if arguments[0] == "":
             print("** class name missing **")
         elif arguments[0] not in class_names:
@@ -182,7 +174,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, command):
         """ show command's implementation """
-
         arguments = command.split(" ")
 
         if arguments[0] == "":
@@ -201,7 +192,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, command):
         """ create command's implementation """
-
         if command == "":
             print("** class name missing **")
         elif command not in class_names:
