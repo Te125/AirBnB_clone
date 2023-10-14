@@ -3,7 +3,6 @@
 
 import os
 import json
-from datetime import datetime
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -28,45 +27,35 @@ class FileStorage():
         key = str(type(obj).__name__) + "." + obj.id
         self.__objects[key] = obj
 
-    def remove(self, key):
-        """ removes obj from __objects using the key <obj class name>.id """
-        self.__objects.pop(key)
-
     def save(self):
-        """ serializes __objects to the JSON file (path: __file_path) """
-        with open(self.__file_path, "w") as file:
-            objects_dict = {}
-            for key, value in self.__objects.items():
-                objects_dict[key] = self.__objects[key].to_dict()
-            json.dump(objects_dict, file)
+        """ serializes __objects to the json file """
+        serialized_objects = {}
+        for key, obj in self.__objects.items():
+            serialized_objects[key] = obj.to_dict()
+        with open(self.__file_path, 'w', encoding='utf-8') as file:
+            json.dump(serialized_objects, file)
+
+    def deserialize(self, obj_dict):
+        """ deserializes the json file """
+        class_lookup = {
+                "BaseModel": BaseModel,
+                "User": User,
+                "State": State,
+                "City": City,
+                "Amenity": Amenity,
+                "Place": Place,
+                "Review": Review
+        }
+        for key, obj_dict in obj_dict.items():
+            class_name, obj_id = key.split(".")
+            class_name = class_lookup.get(class_name, BaseModel)
+            self.__objects[key] = class_name(**obj_dict)
 
     def reload(self):
         """ deserializes the JSON file to __objects """
-        if not os.path.exists(self.__file_path):
-            return
-        with open(self.__file_path, "r") as file:
-            content = file.read()
-            if content is None:
-                return
-            objects_dict = json.loads(content)
-            self.__objects = {}
-            for key, value in objects_dict.items():
-                if "User" in key:
-                    self.__objects[key] = User(**objects_dict[key])
-                    continue
-                elif "State" in key:
-                    self.__objects[key] = State(**objects_dict[key])
-                    continue
-                elif "City" in key:
-                    self.__objects[key] = City(**objects_dict[key])
-                    continue
-                elif "Place" in key:
-                    self.__objects[key] = Place(**objects_dict[key])
-                    continue
-                elif "Amenity" in key:
-                    self.__objects[key] = Amenity(**objects_dict[key])
-                    continue
-                elif "Review" in key:
-                    self.__objects[key] = Review(**objects_dict[key])
-                    continue
-                self.__objects[key] = BaseModel(**objects_dict[key])
+        try:
+            with open(self.__file_path, 'r', encoding='utf-8') as file:
+                data = json.load(file)
+                self.deserialize(data)
+        except FileNotFoundError:
+            pass

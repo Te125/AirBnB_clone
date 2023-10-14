@@ -1,17 +1,10 @@
 #!/usr/bin/python3
-
-"""
-this is a module containg the Place class
-"""
-
+""" This is a module containg the Place class """
 from models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    """
-    Place class which inherits the BaseModel
-    """
-
+    """ Place class which inherits the BaseModel """
     city_id = ""
     user_id = ""
     name = ""

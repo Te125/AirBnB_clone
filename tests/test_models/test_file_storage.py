@@ -3,6 +3,10 @@
 
 import unittest
 import os
+from models import storage
+from io import StringIO
+from unittest.mock import patch
+from console import HBNBCommand
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
@@ -33,10 +37,6 @@ class TestFileStorage(unittest.TestCase):
         """ remove the test JSON file """
         if os.path.exists(cls.test_file_path):
             os.remove(cls.test_file_path)
-
-    def setUp(self):
-        """ clear the storage for each test """
-        self.storage.reload()
         
     def test_initialization(self):
         """ compare the instance attributes """
