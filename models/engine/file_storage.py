@@ -7,6 +7,7 @@ import datetime
 
 
 class FileStorage:
+<<<<<<< HEAD
     """
     This class serializes instances to a JSON file and
     deserializes JSON file to instances.
@@ -15,6 +16,20 @@ class FileStorage:
     def __init__(self):
         self.__file_path = "file.json"
         self.__objects = {}
+=======
+    """ defines path to json file and dict to store objects """
+    __file_path = "file.json"
+    __objects = {}
+    classes = {
+        'BaseModel': BaseModel,
+        'User': User,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Place': Place,
+        'Review': Review
+    }
+>>>>>>> b27bd966b2b5b6d5980e5627fffd169a3947cc5a
 
     def all(self):
         """Returns the dictionary __objects."""

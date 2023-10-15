@@ -41,6 +41,7 @@ class BaseModel:
             storage.new(self)
 
     def __str__(self):
+<<<<<<< HEAD
         """Return a string representation of the instance.
 
         Returns:
@@ -51,6 +52,15 @@ class BaseModel:
         attributes = ', '.join([f'{key}={value}' for
                                 key, value in self.__dict__.items()])
         return f"[{class_name}] ({self.id}) {attributes}"
+=======
+        """ String instance that should be printed """
+        class_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(
+            self.__class__.__name__,
+            self.id,
+            self.__dict__
+        )
+>>>>>>> b27bd966b2b5b6d5980e5627fffd169a3947cc5a
 
     def save(self):
         """Update the 'updated_at' attribute to the current datetime."""

@@ -17,9 +17,23 @@ from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
+<<<<<<< HEAD
     """Command interpreter for the HBNB project"""
 
     prompt = "(hbnb) "
+=======
+    """ this is the initial class for the program """
+    prompt = '(hbnb) '
+    classes = {
+            'BaseModel': BaseModel,
+            'User': User,
+            'State': State,
+            'City': City,
+            'Amenity': Amenity,
+            'Place': Place,
+            'Review': Review
+    }
+>>>>>>> b27bd966b2b5b6d5980e5627fffd169a3947cc5a
 
     def do_quit(self, arg):
         """Quit the command interpreter"""
@@ -136,6 +150,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """Print string representations of all instances."""
         if not arg:
+<<<<<<< HEAD
             print([str(obj) for obj in storage.all().values()])
             return
 
@@ -158,6 +173,17 @@ class HBNBCommand(cmd.Cmd):
 
         print([str(obj) for obj in storage.all().values()
               if isinstance(obj, model_classes[class_name])])
+=======
+            all_instances = storage.all()
+        else:
+            if arg not in self.classes:
+                print("** class doesn't exist **")
+                return
+            all_instances = {
+                k: v for k, v in storage.all().items() if arg in k
+            }
+        print([str(v) for v in all_instances.values()])
+>>>>>>> b27bd966b2b5b6d5980e5627fffd169a3947cc5a
 
     def do_update(self, arg):
         """Update an instance's attributes."""
@@ -211,7 +237,6 @@ class HBNBCommand(cmd.Cmd):
 
         setattr(obj, attr_name, attr_value)
         obj.save()
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
