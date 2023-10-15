@@ -2,7 +2,7 @@
 """ This class module defines all common attributes/methods for all classes """
 import uuid
 from datetime import datetime
-
+import models
 
 
 class BaseModel:
@@ -19,9 +19,9 @@ class BaseModel:
             """ initial class instance """
             self.id = str(uuid.uuid4())
             """ assign string when instance is created """
-            self.created_at = datetime.today()
+            self.created_at = datetime.now()
             """ assign with curent datetime """
-            self.updated_at = self.created_at
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """ String instance that should be printed """
@@ -31,6 +31,9 @@ class BaseModel:
     def save(self):
         """ update public instance with current datetime """
         self.updated_at = datetime.now()
+        """ save current istance to the storage """
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         """ returns a dictionary containing all keys/values of dict """
