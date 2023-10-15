@@ -9,14 +9,15 @@ from models.engine.file_storage import FileStorage
 class HBNBCommand(cmd.Cmd):
     """ this is the initial class for the program """
     prompt = '(hbnb) '
-    classes = {'BaseModel': BaseModel,
+    classes = {
+            'BaseModel': BaseModel,
             'User': User,
             'State': State,
             'City': City,
             'Amenity': Amenity,
             'Place': Place,
             'Review': Review
-            }
+    }
 
     def do_quit(self, arg):
         """ Quit command to exit the program """
@@ -86,7 +87,9 @@ class HBNBCommand(cmd.Cmd):
             if arg not in self.classes:
                 print("** class doesn't exist **")
                 return
-            all_instances = {k: v for k, v in storage.all().items() if arg in k}
+            all_instances = {
+                k: v for k, v in storage.all().items() if arg in k
+            }
         print([str(v) for v in all_instances.values()])
 
     def do_update(self, arg):
@@ -116,7 +119,6 @@ class HBNBCommand(cmd.Cmd):
             instance.save()
         else:
             print("** no instance found **")
-
 
 
 if __name__ == '__main__':

@@ -16,14 +16,15 @@ class FileStorage:
     """ defines path to json file and dict to store objects """
     __file_path = "file.json"
     __objects = {}
-    classes = {'BaseModel': BaseModel, 
-            'User': User, 
-            'State': State, 
-            'City': City, 
-            'Amenity': Amenity, 
-            'Place': Place, 
-            'Review': Review
-            }
+    classes = {
+        'BaseModel': BaseModel,
+        'User': User,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Place': Place,
+        'Review': Review
+    }
 
     def all(self):
         """ Return the dictionary __objects """

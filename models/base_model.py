@@ -25,7 +25,11 @@ class BaseModel:
     def __str__(self):
         """ String instance that should be printed """
         class_name = self.__class__.__name__
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(
+            self.__class__.__name__,
+            self.id,
+            self.__dict__
+        )
 
     def save(self):
         """ update public instance with current datetime """
