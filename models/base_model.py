@@ -8,6 +8,12 @@ import models
 class BaseModel:
     """  initial class base """
     def __init__(self, *args, **kwargs):
+        """ initial class instance """
+        self.id = str(uuid.uuid4())
+        """ assign string when instance is created """
+        self.created_at = datetime.now()
+        """ assign with curent datetime """
+        self.updated_at = datetime.now()
         if kwargs:
             """ handle conversion of created-at and updated_at from strings """
             for key, value in kwargs.items():
@@ -15,13 +21,6 @@ class BaseModel:
                     self.__dict__[key] = datetime.fromisoformat(value)
                 elif key != '__class__':
                     self.__dict__[key] = value
-        else:
-            """ initial class instance """
-            self.id = str(uuid.uuid4())
-            """ assign string when instance is created """
-            self.created_at = datetime.now()
-            """ assign with curent datetime """
-            self.updated_at = datetime.now()
 
     def __str__(self):
         """ String instance that should be printed """
@@ -31,9 +30,6 @@ class BaseModel:
     def save(self):
         """ update public instance with current datetime """
         self.updated_at = datetime.now()
-        """ save current istance to the storage """
-        models.storage.new(self)
-        models.storage.save()
 
     def to_dict(self):
         """ returns a dictionary containing all keys/values of dict """

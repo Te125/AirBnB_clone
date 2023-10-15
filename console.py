@@ -9,7 +9,14 @@ from models.engine.file_storage import FileStorage
 class HBNBCommand(cmd.Cmd):
     """ this is the initial class for the program """
     prompt = '(hbnb) '
-    classes = {'BaseModel': BaseModel}
+    classes = {'BaseModel': BaseModel,
+            'User': User,
+            'State': State,
+            'City': City,
+            'Amenity': Amenity,
+            'Place': Place,
+            'Review': Review
+            }
 
     def do_quit(self, arg):
         """ Quit command to exit the program """
@@ -27,7 +34,8 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
             return
-        if arg not in self.classes:
+        class_name = arg.split()[0]
+        if class_name not in self.classes:
             print("** class doesn't exist **")
             return
         new_instance = self.classes[arg]()
@@ -36,17 +44,19 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """Prints the string representation of an instance"""
+        args = arg.split()
         if not arg:
             print("** class name missing **")
             return
-        args = arg.split()
-        if args[0] not in self.classes:
+        class_name = args[0]
+        if class_name not in self.classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
             print("** instance id missing **")
             return
-        key = args[0] + "." + args[1]
+        instance_id = args[1]
+        key = class_name + "." + instance_id
         if key in storage.all():
             print(storage.all()[key])
         else:
