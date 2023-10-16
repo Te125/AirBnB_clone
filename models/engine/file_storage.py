@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ The filestorage module """
 import json
-from os.path import isfile
+import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -20,9 +20,9 @@ class FileStorage:
         'User': User,
         'State': State,
         'City': City,
-        'Amenity': Amenity,
-        'Place': Place,
-        'Review': Review
+         'Amenity':  Amenity,
+         'Place': Place,
+         'Review': Review
     }
 
     def all(self):
@@ -31,24 +31,23 @@ class FileStorage:
 
     def new(self, obj):
         """ Sets in obj the object with key id """
-        key = f"{obj.__class__.____name__}.{obj.id}"
+        key = f"{obj.__class__.__name__}.{obj.id}"
         self.__objects[key] = obj
 
     def save(self):
         """ Serializes objects to the json file """
         data = {}
-        for key, obj in self.__objects.items():
-            data[key] = obj.to_dict()
+        for key, value in self.__objects.items():
+            data[key] = value.to_dict()
         with open(self.__file_path, 'w', encoding='utf-8') as file:
             json.dump(data, file)
 
     def reload(self):
-        """ Deserializes the json file to objects if it exists """
-        if isfile(self.__file_path):
+        """Deserializes the JSON file to __objects if it exists"""
+        if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
-            from models.base_model import BaseModel
-            for key, value in data.items():
-                class_name, obj_id = key.split('.')
-                obj = eval(class_name)(**value)
-                self.__objects[key] = obj
+                for key, value in data.items():
+                    class_name, obj_id = key.split('.')
+                    obj = BaseModel(**value)
+                    self.__objects[key] = obj

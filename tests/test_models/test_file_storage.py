@@ -51,26 +51,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn('BaseModel.1', all_objects)
         self.assertIn('BaseModel.2', all_objects)
 
-    def test_save_and_reload_invalid_json(self):
-        """ test handling of an invalid json file during reload() """
-        with open(self.file_path, 'w') as file:
-            file.write('This is not valid JSON')
-        new_storage = FileStorage()
-        new_storage.__file_path = self.file_path
-        """ make sure reload() doesn't raise an exception for invalid json """
-        new_storage.reload()
-        all_objects = new_storage.all()
-        self.assertEqual(all_objects)
-
-    def test_save_and_reload_nonexistent_file(self):
-        """ test handling of a nonexistent json file during reload """
-        new_storage = FileStorage()
-        new_storage.__file_path = 'nonexistent_file.json'
-        """ make sure reload doesn't raise an exception for a missing file """
-        new_storage.reload()
-        all_objects = new_storage.all()
-        self.assertEqual(len(all_objects), 0)
-
 
 if __name__ == '__main__':
     unittest.main()

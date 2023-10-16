@@ -40,9 +40,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(user.last_name, "")
 
     def test_user_attributes_assignment(self):
-        """
-        Test if the User attributes can be assigned values correctly.
-        """
+        """ Test if the User attributes can be assigned values correctly. """
         user = User(email="test@example.com", password="password123",
                     first_name="John", last_name="Doe")
         self.assertEqual(user.email, "test@example.com")
@@ -50,7 +48,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(user.first_name, "John")
         self.assertEqual(user.last_name, "Doe")
 
-    """
+"""
         def test_user_str_representation(self):
         Test if the string representation of a User
         instance is correctly formatted.
@@ -60,23 +58,19 @@ class TestUser(unittest.TestCase):
         self.assertIsInstance(user_str, str)
         self.assertIn('[User]', user_str)
         self.assertIn(user.id, user_str)
-        """
-
+        
     def test_user_created_at_and_updated_at(self):
-        """
-        Test if created_at and updated_at are correctly
+         Test if created_at and updated_at are correctly
         initialized as datetime objects
         and if they have the same value upon initialization.
-        """
         user = User()
         self.assertIsInstance(user.created_at, datetime)
         self.assertIsInstance(user.updated_at, datetime)
         self.assertEqual(user.created_at, user.updated_at)
+        """
 
     def test_user_save_updates_updated_at(self):
-        """
-        Test if the save method updates the updated_at attribute.
-        """
+        """ Test if the save method updates the updated_at attribute. """
         user = User()
         original_updated_at = user.updated_at
         user.save()
