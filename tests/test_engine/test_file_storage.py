@@ -31,24 +31,24 @@ class TestFileStorage(unittest.TestCase):
 
     def test_file_storage_new(self):
         """Test the 'new' method of FileStorage"""
-        class MockModel:
+        class MockModels:
             def __init__(self, id):
                 self.id = id
-        obj = MockModel(1)
+        obj = MockModels(1)
         self.storage.new(obj)
         data = self.storage.all()
         self.assertIn("MockModel.1", data)
 
     def test_file_storage_save_reload(self):
         """Test the 'save' and 'reload' methods of FileStorage"""
-        class MockModel:
+        class MockModels:
             def __init__(self, id):
                 self.id = id
 
             def to_dict(self):
                 return {"id": self.id}
 
-        obj = MockModel(1)
+        obj = MockModels(1)
         self.storage.new(obj)
         self.storage.save()
 
