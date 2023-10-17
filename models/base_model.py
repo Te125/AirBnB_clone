@@ -2,12 +2,18 @@
 """ This is the base model for the project """
 import uuid
 from datetime import datetime
+import models
 
 
 class BaseModel:
     """ initial class base """
     def __init__(self, *args, **kwargs):
         """ Initialize a new instance """
+        self.id = str(uuid.uuid4())
+        """ assign string when instance is created """
+        self.created_at = datetime.now()
+        """ assigne with cuurent datetime """
+        self.updated_at = datetime.now()
         if kwargs:
             """ handle conversion of created_at and updated_at from strings """
             for key, value in kwargs.items():
@@ -16,12 +22,7 @@ class BaseModel:
                 elif key != '__class__':
                     setattr(self, key, value)
         else:
-            """ initial class nstance """
-            self.id = str(uuid.uuid4())
-            """ assign string when instance is created """
-            self.created_at = datetime.now()
-            """ assigne with cuurent datetime """
-            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """ String instance that should be printed """
@@ -35,6 +36,7 @@ class BaseModel:
     def save(self):
         """Update the 'updated_at' attribute to the current datetime."""
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """ return a dict containing all key/values of dict """

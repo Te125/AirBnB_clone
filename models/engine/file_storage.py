@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ The filestorage module """
 import json
-import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -41,8 +40,13 @@ class FileStorage:
             k: FileStorage.__objects[k].to_dict()
             for k in FileStorage.__objects.keys()
         }
-        with open(path, "w") as file:
+        with open(data, "w") as file:
             json.dump(new_obj, file)
+        """objects_dict = {}
+        for key, value in FileStorage.__objects.items():
+            objects_dict[key] = FileStorage.__objects[key].to_dict()
+        with open(FileStorage.__file_path, "w") as file:
+            json.dump(objects_dict, file)"""
 
     def reload(self):
         """Deserializes the JSON file to __objects if it exists"""
@@ -56,3 +60,16 @@ class FileStorage:
                     self.new(eval(class_name)(**obj))
         except FileNotFoundError:
             return
+        """if not os.path.exists(FileStorage.__file_path):
+            return
+        with open(FileStorage.__file_path, "r") as file:
+            content = file.read()
+            if content is None:
+                return
+            objects_dict = json.loads(content)
+            FileStorage.__objects = {}
+            for key, value in objects_dict.items():
+                class_name = value['__class__']
+                del value['__class__']
+                cls = FileStorage.classes[class_name]
+                FileStorage.__objects[key] = cls(**value)"""

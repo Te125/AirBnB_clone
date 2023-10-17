@@ -81,12 +81,10 @@ class TestBaseModel(unittest.TestCase):
 
     def test_save_reload(self):
         """ reload objects """
-        print("-- Reloaded objects --")
         storage.reload()
         for key, obj in storage.all().items():
             print(obj)
             """ create a new object """
-            print("-- Create a new object --")
             new_model = BaseModel(name="My_First_Model", my_number=89)
             new_model.save()
             print(new_model)

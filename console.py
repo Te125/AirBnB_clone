@@ -25,26 +25,14 @@ class HBNBCommand(cmd.Cmd):
             'Review': Review
     }
 
-    def do_quit(self, arg):
-        """ Quit command to exit the program """
-        return True
-
-    def do_EOF(self, arg):
-        """ Exit the program """
-        return True
-
-    def emptyline(self):
-        """ Do nothing """
-        pass
-
     def do_create(self, arg):
         """Create a new instance, save it, and print its id"""
         if not arg:
             print("** class name missing **")
-        elif arg not in self.classes:
+        elif arg not in storage.classes:
             print("** class doesn't exist **")
         else:
-            new_instance = HBNBCommand.classes[arg]()
+            new_instance = storage.classes[arg]()
             new_instance.save()
             print(new_instance.id)
 
@@ -58,10 +46,11 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) < 2:
             print("** instance id missing **")
         else:
-            key = "{}.{}".format(args[0], args[1])
-            objects = storage.all()
-            if key in objects:
-                print(objects()[key])
+            key = args[0] + "." + args[1]
+            """ key = "{}.{}".format(args[0], args[1]) """
+            all_objects = storage.all()
+            if key in all_objects:
+                print(all_objects[key])
             else:
                 print("** no instance found **")
 
@@ -84,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, arg):
-        """Prints all string representation of all instances"""
+        """Prints all string representation of all instances
         args = arg.split()
         objects = storage.all()
         if not args:
@@ -96,36 +85,61 @@ class HBNBCommand(cmd.Cmd):
                     if key.split('.')[0] == args[0]]
             )
         else:
+            print("** class doesn't exist **") """
+        if not arg:
+            all_objects = storage.all()
+            print([str(obj) for obj in all_objects.values()])
+        elif arg in storage.classes:
+            all_objects = storage.all()
+            filtered_objects = [
+                str(obj) for key,
+                obj in all_objects.items()
+                if key.startswith(arg + ".")
+            ]
+            print(filtered_objects)
+        else:
             print("** class doesn't exist **")
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         args = arg.split()
-        if not arg:
+        if not args:
             print("** class name missing **")
-        elif args[0] not in HBNBCommand.classes:
+        elif args[0] not in storage.classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
-        elif len(args) < 3:
-            print("** attribute name missing **")
-        elif len(args) < 4:
-            print("** value missing **")
         else:
-            key = "{}.{}".format(args[0], args[1])
-            objects = storage.all()
-            if key in objects:
-                obj = objects[key]
-                attr_name = args[2]
-                attr_value = args[3]
-                try:
-                    attr_value = eval(attr_value)
-                    setattr(obj, attr_name, attr_value)
-                    obj.save()
-                except (SyntaxError, NameError):
-                    pass
-            else:
+            key = args[0] + "." + args[1]
+            all_objects = storage.all()
+            if key not in all_objects:
                 print("** no instance found **")
+            elif len(args) < 3:
+                print("** attribute name missing **")
+            elif len(args) < 4:
+                print("** value missing **")
+            else:
+                obj = all_objects[key]
+                attr_name = args[2]
+                value = args[3]
+                try:
+                    value = eval(value)
+                except (NameError, SyntaxError):
+                    pass
+                setattr(obj, attr_name, value)
+                obj.save()
+
+    def emptyline(self):
+        """Do nothing when an empty line is entered"""
+        pass
+
+    def do_quit(self, arg):
+        """Quit command to exit the program"""
+        return True
+
+    def do_EOF(self, arg):
+        """Exit the program"""
+        return True
 
 
 if __name__ == '__main__':
