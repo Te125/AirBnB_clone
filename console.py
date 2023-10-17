@@ -36,6 +36,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ Do nothing """
         pass
+
     def do_create(self, arg):
         """Create a new instance, save it, and print its id"""
         if not arg:
@@ -91,8 +92,8 @@ class HBNBCommand(cmd.Cmd):
         elif args[0] in HBNBCommand.classes:
             print(
                 [str(obj) for key,
-                obj in objects.items()
-                if key.split('.')[0] == args[0]]
+                    obj in objects.items()
+                    if key.split('.')[0] == args[0]]
             )
         else:
             print("** class doesn't exist **")

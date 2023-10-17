@@ -58,7 +58,7 @@ class TestUser(unittest.TestCase):
         self.assertIsInstance(user_str, str)
         self.assertIn('[User]', user_str)
         self.assertIn(user.id, user_str)
-        
+
     def test_user_created_at_and_updated_at(self):
          Test if created_at and updated_at are correctly
         initialized as datetime objects

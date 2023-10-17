@@ -20,9 +20,9 @@ class FileStorage:
         'User': User,
         'State': State,
         'City': City,
-         'Amenity':  Amenity,
-         'Place': Place,
-         'Review': Review
+        'Amenity':  Amenity,
+        'Place': Place,
+        'Review': Review
     }
 
     def all(self):
@@ -42,7 +42,7 @@ class FileStorage:
             for k in FileStorage.__objects.keys()
         }
         with open(path, "w") as file:
-             json.dump(new_obj, file)
+            json.dump(new_obj, file)
 
     def reload(self):
         """Deserializes the JSON file to __objects if it exists"""
@@ -51,7 +51,7 @@ class FileStorage:
             with open(data) as file:
                 object_json = json.load(file)
                 for obj in object_json.values():
-                    class_name =  obj['__class__']
+                    class_name = obj['__class__']
                     del obj['__class__']
                     self.new(eval(class_name)(**obj))
         except FileNotFoundError:
