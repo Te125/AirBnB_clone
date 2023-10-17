@@ -11,7 +11,9 @@ from models.engine.file_storage import FileStorage
 
 class TestFileStorage(unittest.TestCase):
     def setUp(self):
+        self.file_path = FileStorage._FileStorage__file_path
         self.storage = FileStorage()
+        self.storage.reload()
         self.test_data = {
             'BaseModel.1': {'id': '1', 'name': 'Object 1'},
             'BaseModel.2': {'id': '2', 'name': 'Object 2'},
@@ -19,6 +21,7 @@ class TestFileStorage(unittest.TestCase):
         self.file_path = 'test_file.json'
 
     def tearDown(self):
+        del self.storage
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
 

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ The filestorage module """
 import json
+import models
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -50,9 +51,8 @@ class FileStorage:
 
     def reload(self):
         """Deserializes the JSON file to __objects if it exists"""
-        data = FileStorage.__file_path
         try:
-            with open(data) as file:
+            with open(self.__file_path) as file:
                 object_json = json.load(file)
                 for obj in object_json.values():
                     class_name = obj['__class__']
