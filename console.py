@@ -73,19 +73,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, arg):
-        """Prints all string representation of all instances
+        """Prints all string representation of all instances """
         args = arg.split()
-        objects = storage.all()
-        if not args:
-            print([str(obj) for obj in objects.values()])
-        elif args[0] in HBNBCommand.classes:
-            print(
-                [str(obj) for key,
-                    obj in objects.items()
-                    if key.split('.')[0] == args[0]]
-            )
-        else:
-            print("** class doesn't exist **") """
         if not arg:
             all_objects = storage.all()
             print([str(obj) for obj in all_objects.values()])
@@ -128,6 +117,18 @@ class HBNBCommand(cmd.Cmd):
                     pass
                 setattr(obj, attr_name, value)
                 obj.save()
+
+    def do_count(self, arg):
+        """ retrieve the number of instances of a class """
+        args = arg.split()
+        if not arg:
+            print("** class name missing **")
+        elif args[0] in HBNBCommand.classes:
+            class_name = [args[0]]
+            class_instances = storage.all()[class_name].value()
+            print(len(class_instances))
+        else:
+            print("** class doesn't exist **")
 
     def emptyline(self):
         """Do nothing when an empty line is entered"""
