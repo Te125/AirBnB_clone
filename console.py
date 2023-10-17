@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ Entry point of the command interpreter """
 import cmd
-import json
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models import storage
@@ -41,92 +40,91 @@ class HBNBCommand(cmd.Cmd):
         """Create a new instance, save it, and print its id"""
         if not arg:
             print("** class name missing **")
-            return
-        if arg not in self.classes:
+        elif arg not in self.classes:
             print("** class doesn't exist **")
-            return
-        new_instance = self.classes[arg]()
-        new_instance.save()
-        print(new_instance.id)
+        else:
+            new_instance = HBNBCommand.classes[arg]()
+            new_instance.save()
+            print(new_instance.id)
 
     def do_show(self, arg):
         """Prints the string representation of an instance"""
+        args = arg.split()
         if not arg:
             print("** class name missing **")
-            return
-        args = arg.split()
-        if args[0] not in self.classes:
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
-            return
-        if len(args) < 2:
+        elif len(args) < 2:
             print("** instance id missing **")
-            return
-        key = args[0] + "." + args[1]
-        if key in storage.all():
-            print(storage.all()[key])
         else:
-            print("** no instance found **")
+            key = "{}.{}".format(args[0], args[1])
+            objects = storage.all()
+            if key in objects:
+                print(objects()[key])
+            else:
+                print("** no instance found **")
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
+        args = arg.split()
         if not arg:
             print("** class name missing **")
-            return
-        args = arg.split()
-        if args[0] not in self.classes:
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
-            return
-        if len(args) < 2:
+        elif len(args) < 2:
             print("** instance id missing **")
-            return
-        key = args[0] + "." + args[1]
-        if key in storage.all():
-            del storage.all()[key]
-            storage.save()
         else:
-            print("** no instance found **")
+            key = "{}.{}".format(args[0], args[1])
+            objects = storage.all()
+            if key in objects:
+                objects.pop(key)
+                storage.save()
+            else:
+                print("** no instance found **")
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
-        if not arg:
-            all_instances = storage.all()
+        args = arg.split()
+        objects = storage.all()
+        if not args:
+            print([str(obj) for obj in objects.values()])
+        elif args[0] in HBNBCommand.classes:
+            print(
+                [str(obj) for key,
+                obj in objects.items()
+                if key.split('.')[0] == args[0]]
+            )
         else:
-            if arg not in self.classes:
-                print("** class doesn't exist **")
-                return
-            all_instances = {
-                k: v for k, v in storage.all().items()
-                if arg in k
-            }
-        print([str(v) for v in all_instances.values()])
+            print("** class doesn't exist **")
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
+        args = arg.split()
         if not arg:
             print("** class name missing **")
-            return
-        args = arg.split()
-        if args[0] not in self.classes:
+        elif args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
-            return
-        if len(args) < 2:
+        elif len(args) < 2:
             print("** instance id missing **")
-            return
-        key = args[0] + "." + args[1]
-        if key in storage.all():
-            if len(args) < 3:
-                print("** attribute name missing **")
-                return
-            if len(args) < 4:
-                print("** value missing **")
-                return
-            attr_name = args[2]
-            attr_value = args[3]
-            instance = storage.all()[key]
-            setattr(instance, attr_name, attr_value)
-            instance.save()
+        elif len(args) < 3:
+            print("** attribute name missing **")
+        elif len(args) < 4:
+            print("** value missing **")
         else:
-            print("** no instance found **")
+            key = "{}.{}".format(args[0], args[1])
+            objects = storage.all()
+            if key in objects:
+                obj = objects[key]
+                attr_name = args[2]
+                attr_value = args[3]
+                try:
+                    attr_value = eval(attr_value)
+                    setattr(obj, attr_name, attr_value)
+                    obj.save()
+                except (SyntaxError, NameError):
+                    pass
+            else:
+                print("** no instance found **")
 
 
 if __name__ == '__main__':

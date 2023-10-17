@@ -2,7 +2,6 @@
 """ This is the base model for the project """
 import uuid
 from datetime import datetime
-import models
 
 
 class BaseModel:
@@ -12,10 +11,10 @@ class BaseModel:
         if kwargs:
             """ handle conversion of created_at and updated_at from strings """
             for key, value in kwargs.items():
-                if key == 'created_at' or key == 'updated-at':
-                    self.__dict__[key] = datetime.fromisoformat(value)
+                if key == 'created_at' or key == 'updated_at':
+                    setattr(self, key, datetime.fromisoformat(value))
                 elif key != '__class__':
-                    self.__dict__[key] = value
+                    setattr(self, key, value)
         else:
             """ initial class nstance """
             self.id = str(uuid.uuid4())

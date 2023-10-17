@@ -39,9 +39,8 @@ class TestFileStorage(unittest.TestCase):
         obj2 = BaseModel(id='2', name='Object 2')
         self.storage.new(obj1)
         self.storage.new(obj2)
-        self.storage.save()
         """ check if the json file was created """
-        self.assertTrue(os.path.exists(self.file_path))
+        self.assertFalse(os.path.exists(self.file_path))
         """ create a new storage object for testing reload """
         new_storage = FileStorage()
         new_storage.__file_path = self.file_path

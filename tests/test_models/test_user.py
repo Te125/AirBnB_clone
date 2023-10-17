@@ -48,8 +48,8 @@ class TestUser(unittest.TestCase):
         self.assertEqual(user.first_name, "John")
         self.assertEqual(user.last_name, "Doe")
 
-"""
-        def test_user_str_representation(self):
+        """
+    def test_user_str_representation(self):
         Test if the string representation of a User
         instance is correctly formatted.
         user = User(email="test@example.com", password="password123",

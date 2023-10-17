@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ This is the unittest for the base model"""
 import unittest
+from models import storage
 from datetime import datetime
 from models.base_model import BaseModel
 
@@ -77,6 +78,18 @@ class TestBaseModel(unittest.TestCase):
         """ Compare the attributes """
         self.assertEqual(obj.created_at.isoformat(), new_obj.created_at.isoformat())
         self.assertEqual(obj.created_at.isoformat(), new_obj.created_at.isoformat())
+
+    def test_save_reload(self):
+        """ reload objects """
+        print("-- Reloaded objects --")
+        storage.reload()
+        for key, obj in storage.all().items():
+            print(obj)
+            """ create a new object """
+            print("-- Create a new object --")
+            new_model = BaseModel(name="My_First_Model", my_number=89)
+            new_model.save()
+            print(new_model)
 
 
 if __name__ == '__main__':
