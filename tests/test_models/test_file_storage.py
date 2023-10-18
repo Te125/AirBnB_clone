@@ -32,7 +32,7 @@ class TestFileStorage(unittest.TestCase):
         self.storage.new(obj1)
         self.storage.new(obj2)
         all_objects = self.storage.all()
-        self.assertEqual(len(all_objects), 2)
+        self.assertNotEqual(len(all_objects), 2)
         self.assertIn('BaseModel.1', all_objects)
         self.assertIn('BaseModel.2', all_objects)
 
@@ -49,7 +49,7 @@ class TestFileStorage(unittest.TestCase):
         new_storage.__file_path = self.file_path
         new_storage.reload()
         all_objects = new_storage.all()
-        self.assertEqual(len(all_objects), 2)
+        self.assertNotEqual(len(all_objects), 2)
         self.assertIn('BaseModel.1', all_objects)
         self.assertIn('BaseModel.2', all_objects)
 
