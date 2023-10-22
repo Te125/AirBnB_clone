@@ -5,9 +5,10 @@ header {
     border-bottom: 1px solid #CCCCCC;
     display: flex;
     align-items: center;
+    text-align: center;
 }
 
-header img {
-    margin: 20px;
+header::before {
+    margin-left: 20px;
     vertical-align: middle;
 }
