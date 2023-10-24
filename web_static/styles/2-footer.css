@@ -5,4 +5,8 @@ footer {
     text-align: center;
     position: absolute;
     bottom: 0;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
 }

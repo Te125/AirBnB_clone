@@ -1,14 +1,14 @@
 header {
-    background-color: #000;
+    background-color: white;
     height: 70px;
     width: 100%;
     border-bottom: 1px solid #CCCCCC;
     display: flex;
     align-items: center;
-    text-align: center;
 }
-
-header::before {
-    margin-left: 20px;
-    vertical-align: middle;
+header div {
+    width: 142px;
+    height: 60px;
+    padding-left: 20px;
+    background: url("../images/logo.png") no-repeat center;
 }
