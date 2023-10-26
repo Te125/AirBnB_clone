@@ -36,7 +36,7 @@ section.filters button:hover {
     height: 100%;
     width: 25%;
     display: inline-block;
-    text-align: left;
+    text-align: center;
     border-right: 1px solid #DDDDDD;
     float: none;
 }
@@ -44,6 +44,7 @@ h3 {
     font-weight: 600;
     margin-top: 6px;
     font-size: 14px;
+    /*padding: 10px;*/
 }
 h4 {
     font-weight: 400;
@@ -55,48 +56,47 @@ h3 h4 {
     padding-left: 0;
     position: absolute;
     margin-right: auto;
-}    
+}
 div {
     display: block;
     margin-right: auto;
-}
-.locations ul {
-    list-style: none;
-    margin: 0 0 0 -1px;
-}
-.amenities ul {
-    list-style: none;
-    margin: 0 0 0 -1px;
-    padding-top: 30px;
-}
-.locations:hover ul, .popover:hover {
-    visibility: visible;
-    display: block;
-}
-.amenities:hover ul, .popover:hover {
-    visibility: visible;
-    display: block;
+    padding: 1px solid black;
+    margin: 200;
 }
 /*.popover {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    padding-left: 30px;
-    visibility: hidden;
-    display: none;
-    background-color: #FAFAFA;
-    width: calc(100% + 2px);
+    display: list-item;
+    width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
-    height: auto;
-}*/
-.popover li {
-    margin: 7px 0 0 7px;
-}
-.locations.popover li:h2 {
-    padding-top: 0;
-}
-.popover h2 {
+    padding: 5px;
+    color: #484848;
     font-size: 16px;
-    padding: 10px 0 0 0;
+    position: relative;
+    cursor: auto;
+    border-collapse: collapse;
+}
+ul.popover {
+    list-style-type: none;
+    padding: 0px;
+}
+/*li.popover {
+    list-style-type: none;
+    padding: 2px;
+    font-size: 10px;
+}
+ul.popover li {
+    margin: 0;
+    font-size: small;
+}
+ul.popover ul {
+    list-style-type: none;
+}
+ul.popover h2 {
+    font-size: 16px;
     margin: 0;
 }
+ul.popover li {
+    margin: 10;
+    padding-inline: 0;
+    font-size: small;
+}*/

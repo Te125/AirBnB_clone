@@ -36,7 +36,7 @@ section.filters button:hover {
     height: 100%;
     width: 25%;
     display: inline-block;
-    text-align: left;
+    text-align: center;
     border-right: 1px solid #DDDDDD;
     float: none;
 }
@@ -44,6 +44,7 @@ h3 {
     font-weight: 600;
     margin-top: 6px;
     font-size: 14px;
+    /*padding: 10px;*/
 }
 h4 {
     font-weight: 400;
@@ -59,4 +60,6 @@ h3 h4 {
 div {
     display: block;
     margin-right: auto;
+    padding: 1px solid black;
+    margin: 200;
 }
