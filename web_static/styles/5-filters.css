@@ -19,7 +19,7 @@ section.filters button {
     width: 20%;
     text-align: center;
     vertical-align: middle;
-    margin-right: 11px 30px;
+    margin-right: 30px;
 }
 section.filters button:hover {
     opacity: 0.9;
@@ -34,11 +34,8 @@ section.filters button:hover {
 }
 .filters .amenities {
     height: 100%;
-    width: 25%;
+    width: 60%;
     display: inline-block;
-    text-align: center;
-    border-right: 1px solid #DDDDDD;
-    float: none;
 }
 h3 {
     font-weight: 600;

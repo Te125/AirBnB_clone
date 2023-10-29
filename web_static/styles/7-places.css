@@ -1,0 +1,23 @@
+.article {
+    width: 390px;
+    padding: 20px;
+    /*height: 200%;*/
+    margin: 20px;
+    border: 1px solid #FF5A5F;
+    border-radius: 4px;
+}
+.places {
+    height: 150%;
+    text-align: 25px;
+    padding: 100px;
+    width: 60%;
+}
+.places h2 {
+    background-color: white;
+    font-size: 30px;
+    height: 200%;
+    text-align: center;
+    justify-content: flex-end;
+    align-items: center;
+    border-right: 1px solid black;
+}

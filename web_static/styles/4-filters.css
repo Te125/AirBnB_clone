@@ -19,7 +19,7 @@ section.filters button {
     width: 20%;
     text-align: center;
     vertical-align: middle;
-    margin-right: 11px 30px;
+    margin-right: 30px;
 }
 section.filters button:hover {
     opacity: 0.9;
