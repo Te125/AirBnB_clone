@@ -1,8 +1,7 @@
-.article {
-    width: 390px;
-    padding: 20px;
-    /*height: 200%;*/
+article {
+    height: 100%;
     margin: 20px;
+    text-align: center;
     border: 1px solid #FF5A5F;
     border-radius: 4px;
 }
@@ -10,14 +9,19 @@
     height: 150%;
     text-align: 25px;
     padding: 100px;
+    flex-wrap: wrap;
     width: 60%;
+}
+.places article {
+    text-align: center;
+    width: 100%;
 }
 .places h2 {
     background-color: white;
+    display: inline-flex;
     font-size: 30px;
     height: 200%;
     text-align: center;
     justify-content: flex-end;
     align-items: center;
-    border-right: 1px solid black;
 }
